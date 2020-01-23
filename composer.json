@@ -1,0 +1,21 @@
+{
+    "name": "oat-sa/bundle-health-check",
+    "description": "Health Check Bundle",
+    "keywords": ["health", "check"],
+    "type": "symfony-bundle",
+    "license": "GPL-2.0-only",
+    "require": {
+        "php": "^7.2.5",
+        "symfony/framework-bundle": "^5.0",
+        "symfony/yaml": "^5.0"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.0"
+    },
+    "autoload": {
+        "psr-4": { "OAT\\Bundle\\HealthCheckBundle\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    }
+}
