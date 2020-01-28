@@ -4,8 +4,15 @@
     "keywords": ["health", "check"],
     "type": "symfony-bundle",
     "license": "GPL-2.0-only",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/oat-sa/lib-health-check"
+        }
+    ],
     "require": {
         "php": "^7.2.5",
+        "oat-sa/lib-health-check": "<1.0",
         "symfony/framework-bundle": "^5.0",
         "symfony/yaml": "^5.0"
     },
