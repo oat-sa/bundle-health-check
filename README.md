@@ -29,7 +29,7 @@ This bundle provides by default the following endpoints:
 
 **Notes**:
 - you can check the [openapi documentation](openapi/health-check.yaml) for more details
-- you can change / disable the route in the `config/routes/health_check.yaml` file of your application (created by flex recipe)
+- you can change / disable the route in the `config/routes/health_check.yaml` file of your application (created by [flex recipe]((https://github.com/oat-sa/flex-recipes/blob/master/oat-sa/bundle-health-check/0.1/config/routes/health_check.yaml))
 
 ### Health Checkers
 

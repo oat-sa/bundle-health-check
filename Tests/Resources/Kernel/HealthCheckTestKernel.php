@@ -44,7 +44,8 @@ class HealthCheckTestKernel extends Kernel
 
     protected function configureRoutes(RouteCollectionBuilder $routes): void
     {
-        $routes->import(__DIR__ . '/routes.yaml');
+        $routes->import(__DIR__ .'/../../../Resources/config/routing/health_check_ping.yaml');
+        $routes->import(__DIR__ .'/../../../Resources/config/routing/health_check_check.yaml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
