@@ -28,6 +28,6 @@ class PingAction
 {
     public function __invoke(): Response
     {
-        return new Response();
+        return new Response('pong');
     }
 }

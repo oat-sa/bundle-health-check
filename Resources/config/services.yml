@@ -1,7 +1,0 @@
-services:
-    _defaults:
-        public: false
-
-    OAT\Library\HealthCheck\HealthChecker:
-        arguments:
-            - !tagged_iterator 'health_check.checker'

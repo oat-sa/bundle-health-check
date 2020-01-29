@@ -20,30 +20,24 @@
 
 declare(strict_types=1);
 
-namespace OAT\Bundle\HealthCheckBundle\Action;
+namespace OAT\Bundle\HealthCheckBundle\Tests\Action;
 
-use OAT\Library\HealthCheck\HealthChecker;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class HealthCheckAction
+class PingActionTest extends WebTestCase
 {
-    /** @var HealthChecker */
-    private $checker;
-
-    public function __construct(HealthChecker $checker)
+    public function testPingEndpoint(): void
     {
-        $this->checker = $checker;
-    }
+        $client = static::createClient();;
 
-    public function __invoke(Request $request): JsonResponse
-    {
-        $results = $this->checker->performChecks();
+        $client->request(Request::METHOD_GET, '/ping');
 
-        return new JsonResponse(
-            ['data' => $results],
-            $results->hasErrors() ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK
-        );
+        $response = $client->getResponse();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals('pong', $response->getContent());
     }
 }

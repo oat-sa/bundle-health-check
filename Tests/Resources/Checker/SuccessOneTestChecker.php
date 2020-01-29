@@ -20,30 +20,20 @@
 
 declare(strict_types=1);
 
-namespace OAT\Bundle\HealthCheckBundle\Action;
+namespace OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker;
 
-use OAT\Library\HealthCheck\HealthChecker;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use OAT\Library\HealthCheck\Checker\CheckerInterface;
+use OAT\Library\HealthCheck\Result\CheckerResult;
 
-class HealthCheckAction
+class SuccessOneTestChecker implements CheckerInterface
 {
-    /** @var HealthChecker */
-    private $checker;
-
-    public function __construct(HealthChecker $checker)
+    public function getIdentifier(): string
     {
-        $this->checker = $checker;
+        return 'success1';
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function check(): CheckerResult
     {
-        $results = $this->checker->performChecks();
-
-        return new JsonResponse(
-            ['data' => $results],
-            $results->hasErrors() ? Response::HTTP_INTERNAL_SERVER_ERROR : Response::HTTP_OK
-        );
+        return new CheckerResult(true, 'success 1 message');
     }
 }

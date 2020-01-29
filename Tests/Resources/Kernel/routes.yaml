@@ -1,0 +1,9 @@
+health_check_check:
+    path: '/health-check'
+    methods: GET
+    controller: OAT\Bundle\HealthCheckBundle\Action\HealthCheckAction
+
+health_check_ping:
+    path: '/ping'
+    methods: GET
+    controller: OAT\Bundle\HealthCheckBundle\Action\PingAction

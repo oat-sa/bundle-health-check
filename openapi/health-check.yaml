@@ -1,0 +1,67 @@
+openapi: 3.0.1
+
+info:
+    version: v0.1
+    title: Health Check Bundle Endpoints
+
+paths:
+    /ping:
+        get:
+            summary: Ping endpoint
+            description: Ping endpoint, that ensures your application is up and running
+            responses:
+                200:
+                    description: Success
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                                example: pong
+                500:
+                    description: Error
+    /health-check:
+        get:
+            summary: Health check endpoint
+            description: Health check endpoint, that run registered checkers
+            responses:
+                200:
+                    description: All checkers were in success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessHealthCheck'
+                500:
+                    description: At least one of the checkers was in error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorHealthCheck'
+
+components:
+    schemas:
+        SuccessHealthCheck:
+            type: object
+            additionalProperties:
+                type: string
+            example:
+                success: true
+                checkers:
+                    successChecker:
+                        success: true
+                        message: success message
+                    otherSuccessChecker:
+                        success: true
+                        message: other success message
+        ErrorHealthCheck:
+            type: object
+            additionalProperties:
+                type: string
+            example:
+                success: false
+                checkers:
+                    successChecker:
+                        success: true
+                        message: success message
+                    errorChecker:
+                        success: false
+                        message: error message
