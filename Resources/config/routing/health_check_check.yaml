@@ -1,0 +1,5 @@
+health_check_check:
+    path: '/health-check'
+    methods: GET
+    controller: OAT\Bundle\HealthCheckBundle\Action\HealthCheckAction
+

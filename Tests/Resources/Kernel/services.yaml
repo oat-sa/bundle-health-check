@@ -1,0 +1,11 @@
+services:
+    logger:
+        class: Psr\Log\NullLogger
+
+    OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker\SuccessTwoTestChecker:
+        tags:
+            - { name: 'health_check.checker', priority: 2 }
+
+    OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker\SuccessOneTestChecker:
+        tags:
+            - { name: 'health_check.checker', priority: 1 }
