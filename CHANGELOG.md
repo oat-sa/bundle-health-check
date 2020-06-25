@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.0
+-----
+* Added symfony down to 4.4.x retro compatibility
+* Updated licence to LGPL
+
 0.1.0
 -----
 
