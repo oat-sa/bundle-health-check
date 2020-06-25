@@ -14,29 +14,35 @@
 $ composer require oat-sa/bundle-health-check
 ```
 
-**Note**: related [flex recipe](https://github.com/oat-sa/flex-recipes/tree/master/oat-sa/bundle-health-check/) will enable and auto configure the bundle in your application.
+**Note**: related [flex recipe](https://github.com/symfony/recipes-contrib/tree/master/oat-sa/bundle-health-check/) will enable and auto configure the bundle in your application.
 
 ## Usage
 
-### Endpoints
+### Available endpoints
 
 This bundle provides by default the following endpoints:
 
-| Endpoint              | Description                                           |
-|-----------------------|-------------------------------------------------------|
-| `[GET] /ping`         | ensures your application is up and running (no logic) |
-| `[GET] /health-check` | runs configured checkers                              |
+|  Method  | Route           | Description                                           |
+|----------|-----------------|-------------------------------------------------------|
+| `GET`    | `/ping`         | ensures your application is up and running (no logic) |
+| `GET`    | `/health-check` | runs registered checkers (custom logic)               |
 
 **Notes**:
-- you can check the [openapi documentation](openapi/health-check.yaml) for more details
-- you can change / disable the route in the `config/routes/health_check.yaml` file of your application (created by [flex recipe]((https://github.com/oat-sa/flex-recipes/blob/master/oat-sa/bundle-health-check/0.1/config/routes/health_check.yaml))
+- you can check the related [openapi documentation](openapi/health-check.yaml) for more details
+- you can update / disable those routes in the `config/routes/health_check.yaml` file of your application (created by [flex recipe](https://github.com/symfony/recipes-contrib/tree/master/oat-sa/bundle-health-check/))
 
-### Health Checkers
+### Ping
+
+The ping endpoint just returns a `200` response with the string `pong` as body.
+
+It is just here to ensure your application is correctly installed, up and running.
+
+### Health Checker
 
 This bundle will automatically add the tag `health_check.checker` to your application services if they implement the [CheckerInterface](https://github.com/oat-sa/lib-health-check/blob/master/src/Checker/CheckerInterface.php)
-They then will be auto registered onto the [HealthChecker](https://github.com/oat-sa/lib-health-check/blob/master/src/HealthChecker.php) service.
+(they will be auto registered onto the [HealthChecker](https://github.com/oat-sa/lib-health-check/blob/master/src/HealthChecker.php) service).
 
-If you want to register [CheckerInterface](https://github.com/oat-sa/lib-health-check/blob/master/src/Checker/CheckerInterface.php) implementation from other libraries, you can configure them as follow:
+If you want to register a [CheckerInterface](https://github.com/oat-sa/lib-health-check/blob/master/src/Checker/CheckerInterface.php) implementation from 3rd party libraries, you can configure them as following:
 
 ```yaml
 # config/services.yaml
@@ -51,7 +57,7 @@ services:
             - { name: 'health_check.checker', priority: 1 }
 ```
 
-**Notes**: you can use the `priority` property of the `health_check.checker` tag to order them.
+**Note**: you can use the `priority` property of the `health_check.checker` tag to order them.
 
 
 ## Tests

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 
 info:
-    version: v0.1
+    version: v1.0
     title: Health Check Bundle Endpoints
 
 paths:
