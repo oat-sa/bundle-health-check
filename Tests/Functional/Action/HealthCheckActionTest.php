@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace OAT\Bundle\HealthCheckBundle\Tests\Action;
+namespace OAT\Bundle\HealthCheckBundle\Tests\Functional\Action;
 
 use OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker\ErrorTestChecker;
 use OAT\Library\HealthCheck\HealthChecker;
