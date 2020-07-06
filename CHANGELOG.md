@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.1.0
+-----
+* Added health check command
+
 1.0.0
 -----
 * Added symfony down to 4.4.x retro compatibility

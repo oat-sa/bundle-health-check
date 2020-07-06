@@ -9,3 +9,7 @@ services:
     OAT\Bundle\HealthCheckBundle\Action\HealthCheckAction:
         arguments: ['@OAT\Library\HealthCheck\HealthChecker']
         tags: ['controller.service_arguments']
+
+    OAT\Bundle\HealthCheckBundle\Command\HealthCheckCommand:
+        arguments: ['@OAT\Library\HealthCheck\HealthChecker']
+        tags: ['console.command']

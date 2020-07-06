@@ -31,13 +31,13 @@ This bundle provides by default the following endpoints:
 - you can check the related [openapi documentation](openapi/health-check.yaml) for more details
 - you can update / disable those routes in the `config/routes/health_check.yaml` file of your application (created by [flex recipe](https://github.com/symfony/recipes-contrib/tree/master/oat-sa/bundle-health-check/))
 
-### Ping
+#### Ping
 
 The ping endpoint just returns a `200` response with the string `pong` as body.
 
 It is just here to ensure your application is correctly installed, up and running.
 
-### Health Checker
+#### Health Checker
 
 This bundle will automatically add the tag `health_check.checker` to your application services if they implement the [CheckerInterface](https://github.com/oat-sa/lib-health-check/blob/master/src/Checker/CheckerInterface.php)
 (they will be auto registered onto the [HealthChecker](https://github.com/oat-sa/lib-health-check/blob/master/src/HealthChecker.php) service).
@@ -59,6 +59,18 @@ services:
 
 **Note**: you can use the `priority` property of the `health_check.checker` tag to order them.
 
+### Available command
+
+If you prefer to run your checks in CLI mode, this bundle provides by default the following command:
+
+```console
+$ bin/console health:check
+```
+
+**Notes**:
+- it runs registered checkers as explained in section above
+- it returns `0` in case of overall success, or `1` if one (or more than one) checker failed
+- it displays a summary of all executed checkers and their result
 
 ## Tests
 
