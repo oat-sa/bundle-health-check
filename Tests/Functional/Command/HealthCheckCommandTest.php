@@ -53,7 +53,7 @@ class HealthCheckCommandTest extends KernelTestCase
         $this->assertStringContainsString('success 1 message', $display);
     }
 
-    public function testHealthCheckEndpointWithAddedFailingChecker(): void
+    public function testHealthCheckCommandWithAddedFailingChecker(): void
     {
         // registers manually a supplementary failing checker onto the registered HealthChecker container service
         static::$container->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
@@ -68,7 +68,7 @@ class HealthCheckCommandTest extends KernelTestCase
         $this->assertStringContainsString('error', $display);
     }
 
-    public function testHealthCheckEndpointWithCustomError(): void
+    public function testHealthCheckCommandWithCustomError(): void
     {
         $checkerMock = $this->createMock(HealthChecker::class);
         $checkerMock
