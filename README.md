@@ -6,7 +6,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/oat-sa/bundle-health-check/badge.svg?branch=master)](https://coveralls.io/github/oat-sa/bbundle-health-check?branch=master)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/oat-sa/bundle-health-check.svg)](https://packagist.org/packages/oat-sa/bundle-health-check)
 
-
 > [Symfony](https://symfony.com/) bundle for health checks automation, based on [health check library](https://github.com/oat-sa/lib-health-check)
 
 ## Table of Contents
