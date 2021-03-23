@@ -1,2 +1,3 @@
 framework:
     test: true
+    secret: a_secret
