@@ -5,6 +5,7 @@ services:
     OAT\Library\HealthCheck\HealthChecker:
         arguments:
             - !tagged_iterator 'health_check.checker'
+            - '@Psr\Log\LoggerInterface'
 
     OAT\Bundle\HealthCheckBundle\Action\HealthCheckAction:
         arguments: ['@OAT\Library\HealthCheck\HealthChecker']

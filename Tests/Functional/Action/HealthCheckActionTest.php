@@ -24,6 +24,7 @@ namespace OAT\Bundle\HealthCheckBundle\Tests\Functional\Action;
 
 use OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker\ErrorTestChecker;
 use OAT\Library\HealthCheck\HealthChecker;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,11 +36,16 @@ class HealthCheckActionTest extends WebTestCase
     /** @var KernelBrowser */
     private $client;
 
+    /** @var LoggerInterface */
+    private $logger;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->client = static::createClient();
+
+        $this->logger = static::$container->get(LoggerInterface::class);
     }
 
     public function testHealthCheckEndpointWithRegisteredSuccessCheckers(): void
@@ -67,6 +73,9 @@ class HealthCheckActionTest extends WebTestCase
             ],
             json_decode($response->getContent(), true)['data']
         );
+
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success1 success: success 1 message'));
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success2 success: success 2 message'));
     }
 
     public function testHealthCheckEndpointWithAddedFailingChecker(): void
@@ -101,5 +110,9 @@ class HealthCheckActionTest extends WebTestCase
             ],
             json_decode($response->getContent(), true)['data']
         );
+
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success1 success: success 1 message'));
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success2 success: success 2 message'));
+        $this->assertTrue($this->logger->hasError('[health-check] checker error failure: error message'));
     }
 }
