@@ -20,7 +20,7 @@
 $ composer require oat-sa/bundle-health-check
 ```
 
-**Note**: related [flex recipe](https://github.com/symfony/recipes-contrib/tree/master/oat-sa/bundle-health-check/) will enable and auto configure the bundle in your application.
+**Note**: the related [flex recipe](https://github.com/symfony/recipes-contrib/tree/master/oat-sa/bundle-health-check/) will enable and auto configure the bundle in your application.
 
 ## Usage
 
