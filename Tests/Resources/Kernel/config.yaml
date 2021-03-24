@@ -1,3 +1,7 @@
 framework:
     test: true
     secret: a_secret
+
+services:
+    logger:
+        class: Psr\Log\Test\TestLogger

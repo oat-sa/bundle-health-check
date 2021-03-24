@@ -26,6 +26,7 @@ use Exception;
 use OAT\Bundle\HealthCheckBundle\Command\HealthCheckCommand;
 use OAT\Bundle\HealthCheckBundle\Tests\Resources\Checker\ErrorTestChecker;
 use OAT\Library\HealthCheck\HealthChecker;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -35,11 +36,16 @@ class HealthCheckCommandTest extends KernelTestCase
     /** @var CommandTester */
     private $commandTester;
 
+    /** @var LoggerInterface */
+    private $logger;
+
     protected function setUp(): void
     {
         $application = new Application(static::bootKernel());
 
         $this->commandTester = new CommandTester($application->find(HealthCheckCommand::NAME));
+
+        $this->logger = static::$container->get(LoggerInterface::class);
     }
 
     public function testHealthCheckCommandWithRegisteredSuccessCheckers(): void
@@ -51,6 +57,9 @@ class HealthCheckCommandTest extends KernelTestCase
         $display = $this->commandTester->getDisplay();
         $this->assertStringContainsString('success 2 message', $display);
         $this->assertStringContainsString('success 1 message', $display);
+
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success1 success: success 1 message'));
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success2 success: success 2 message'));
     }
 
     public function testHealthCheckCommandWithAddedFailingChecker(): void
@@ -66,6 +75,10 @@ class HealthCheckCommandTest extends KernelTestCase
         $this->assertStringContainsString('success 2 message', $display);
         $this->assertStringContainsString('success 1 message', $display);
         $this->assertStringContainsString('error', $display);
+
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success1 success: success 1 message'));
+        $this->assertTrue($this->logger->hasInfo('[health-check] checker success2 success: success 2 message'));
+        $this->assertTrue($this->logger->hasError('[health-check] checker error failure: error message'));
     }
 
     public function testHealthCheckCommandWithCustomError(): void
