@@ -3,7 +3,6 @@
 [![Latest Version](https://img.shields.io/github/tag/oat-sa/bundle-health-check.svg?style=flat&label=release)](https://github.com/oat-sa/bundle-health-check/tags)
 [![License GPL2](http://img.shields.io/badge/licence-LGPL%202.1-blue.svg)](http://www.gnu.org/licenses/lgpl-2.1.html)
 [![Build Status](https://travis-ci.org/oat-sa/bundle-health-check.svg?branch=master)](https://travis-ci.org/oat-sa/bundle-health-check)
-[![Coverage Status](https://coveralls.io/repos/github/oat-sa/bundle-health-check/badge.svg?branch=master)](https://coveralls.io/github/oat-sa/bbundle-health-check?branch=master)
 [![Packagist Downloads](http://img.shields.io/packagist/dt/oat-sa/bundle-health-check.svg)](https://packagist.org/packages/oat-sa/bundle-health-check)
 
 > [Symfony](https://symfony.com/) bundle for health checks automation, based on [health check library](https://github.com/oat-sa/lib-health-check)

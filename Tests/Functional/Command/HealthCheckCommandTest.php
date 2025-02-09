@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2020 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2020-2025 (original work) Open Assessment Technologies SA;
  */
 
 declare(strict_types=1);
@@ -33,11 +33,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class HealthCheckCommandTest extends KernelTestCase
 {
-    /** @var CommandTester */
-    private $commandTester;
-
-    /** @var LoggerInterface */
-    private $logger;
+    private CommandTester $commandTester;
+    private LoggerInterface $logger;
 
     protected function setUp(): void
     {
@@ -45,7 +42,7 @@ class HealthCheckCommandTest extends KernelTestCase
 
         $this->commandTester = new CommandTester($application->find(HealthCheckCommand::NAME));
 
-        $this->logger = static::$container->get(LoggerInterface::class);
+        $this->logger = static::getContainer()->get(LoggerInterface::class);
     }
 
     public function testHealthCheckCommandWithRegisteredSuccessCheckers(): void
@@ -65,7 +62,7 @@ class HealthCheckCommandTest extends KernelTestCase
     public function testHealthCheckCommandWithAddedFailingChecker(): void
     {
         // registers manually a supplementary failing checker onto the registered HealthChecker container service
-        static::$container->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
+        static::getContainer()->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
 
         $result = $this->commandTester->execute([]);
 

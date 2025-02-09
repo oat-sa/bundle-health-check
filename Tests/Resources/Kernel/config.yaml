@@ -4,4 +4,4 @@ framework:
 
 services:
     logger:
-        class: Psr\Log\Test\TestLogger
+        class: ColinODell\PsrTestLogger\TestLogger
