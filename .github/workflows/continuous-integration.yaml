@@ -1,0 +1,62 @@
+name: Continuous integration
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.operating-system }}
+    if: "!contains(github.event.head_commit.message, 'ci: add updated coverage_badge.svg')"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ ubuntu-latest ]
+        php-version: [ '7.2', '7.4', '8.0', '8.1', '8.2', '8.3']
+        include:
+          - php-version: '7.2'
+            coverage: true
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suite
+        run: php${{ matrix.coverage && ' -dxdebug.mode=coverage' }} vendor/bin/phpunit --coverage-clover clover.xml --log-junit junit.xml
+        continue-on-error: true
+
+      - name: Publish a test report
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: 'junit.xml'
+          fail_on_failure: true
+          require_tests: true
+          summary: PHP ${{ matrix.php-version }}
+
+      - name: Generate a coverage badge
+        uses: timkrase/phpunit-coverage-badge@v1.2.0
+        if: ${{ matrix.coverage }}
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push a coverage badge
+        uses: EndBug/add-and-commit@v9
+        if: ${{ matrix.coverage }}
+        with:
+          add: coverage_badge.svg
+          commit: --signoff
+          message: 'ci: add updated coverage_badge.svg'
