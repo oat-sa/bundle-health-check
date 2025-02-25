@@ -3,7 +3,7 @@
     "description": "Health Check Bundle",
     "keywords": ["symfony", "health", "check"],
     "type": "symfony-bundle",
-    "license": "LGPL-2.1",
+    "license": "LGPL-2.1-only",
     "require": {
         "php": ">=7.2.0",
         "ext-json": "*",
