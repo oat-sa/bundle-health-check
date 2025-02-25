@@ -28,13 +28,13 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class HealthCheckTestKernel extends Kernel
 {
     use MicroKernelTrait;
 
-    public function registerBundles()
+    public function registerBundles(): array
     {
         return [
             new FrameworkBundle(),
@@ -42,15 +42,15 @@ class HealthCheckTestKernel extends Kernel
         ];
     }
 
-    protected function configureRoutes(RouteCollectionBuilder $routes): void
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
-        $routes->import(__DIR__ .'/../../../Resources/config/routing/health_check_ping.yaml');
-        $routes->import(__DIR__ .'/../../../Resources/config/routing/health_check_check.yaml');
+        $routes->import(__DIR__ . '/../../../Resources/config/routing/health_check_ping.yaml');
+        $routes->import(__DIR__ . '/../../../Resources/config/routing/health_check_check.yaml');
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        $loader->load(__DIR__ .'/../../../Resources/config/services.yaml');
+        $loader->load(__DIR__ . '/../../../Resources/config/services.yaml');
         $loader->load(__DIR__ . '/services.yaml');
         $loader->load(__DIR__ . '/config.yaml');
     }
