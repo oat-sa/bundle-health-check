@@ -45,7 +45,7 @@ class HealthCheckActionTest extends WebTestCase
 
         $this->client = static::createClient();
 
-        $this->logger = static::$container->get(LoggerInterface::class);
+        $this->logger = $this->getContainer()->get(LoggerInterface::class);
     }
 
     public function testHealthCheckEndpointWithRegisteredSuccessCheckers(): void
@@ -81,7 +81,7 @@ class HealthCheckActionTest extends WebTestCase
     public function testHealthCheckEndpointWithAddedFailingChecker(): void
     {
         // registers manually a supplementary failing checker onto the registered HealthChecker container service
-        static::$container->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
+        $this->getContainer()->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
 
         $this->client->request(Request::METHOD_GET, '/health-check');
 

@@ -1,0 +1,59 @@
+name: Continuous integration
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
+        coverage: [ false ]
+        include:
+          - php-version: '8.4'
+            coverage: true
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suite
+        if: ${{ !matrix.coverage }}
+        run: vendor/bin/phpunit
+
+      - name: Run test suite with code coverage
+        if: ${{ matrix.coverage }}
+        run: php -dxdebug.mode=coverage vendor/bin/phpunit --coverage-clover coverage.xml
+
+      - name: Push coverage report
+        if: ${{ matrix.coverage }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: oat-sa/bundle-health-check
