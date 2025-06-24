@@ -45,7 +45,7 @@ class HealthCheckCommandTest extends KernelTestCase
 
         $this->commandTester = new CommandTester($application->find(HealthCheckCommand::NAME));
 
-        $this->logger = static::$container->get(LoggerInterface::class);
+        $this->logger = $this->getContainer()->get(LoggerInterface::class);
     }
 
     public function testHealthCheckCommandWithRegisteredSuccessCheckers(): void
@@ -65,7 +65,7 @@ class HealthCheckCommandTest extends KernelTestCase
     public function testHealthCheckCommandWithAddedFailingChecker(): void
     {
         // registers manually a supplementary failing checker onto the registered HealthChecker container service
-        static::$container->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
+        $this->getContainer()->get(HealthChecker::class)->registerChecker(new ErrorTestChecker());
 
         $result = $this->commandTester->execute([]);
 
