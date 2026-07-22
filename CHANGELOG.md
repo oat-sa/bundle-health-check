@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+Unreleased
+----------
+
+* Breaking: require Symfony 6 or 7 (`^6.0 || ^7.0`)
+* Breaking: require PHP >= 8.2
+* Use colinodell/psr-testlogger in functional tests (psr/log 3 compatibility)
+
 2.1.0
 -----
 
